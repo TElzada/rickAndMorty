@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.geeks.rickandmorty.data.api.CharacterDto
 import com.geeks.rickandmorty.databinding.ItemCharacterBinding
+import com.geeks.rickandmorty.domain.models.Character
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.VH>() {
 
-    private val items = mutableListOf<CharacterDto>()
+    private val items = mutableListOf<Character>()
 
-    fun setItems(list: List<CharacterDto>) {
+    fun setItems(list: List<Character>) {
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
@@ -33,7 +33,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.VH>() {
     override fun getItemCount(): Int = items.size
 
     class VH(private val b: ItemCharacterBinding) : RecyclerView.ViewHolder(b.root) {
-        fun bind(item: CharacterDto) {
+        fun bind(item: Character) {
             b.characterName.text = item.name
             b.characterStatus.text = item.status
             b.characterSpecies.text = item.species

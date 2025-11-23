@@ -1,9 +1,11 @@
 package com.geeks.rickandmorty.presentation.cartoon
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +41,20 @@ class CartoonActivity : AppCompatActivity() {
         lifecycleScope.launch {
             vm.charactersState.collectLatest { list ->
                 adapter.setItems(list)
+            }
+        }
+
+        lifecycleScope.launch {
+            vm.isLoading.collectLatest { isLoading ->
+                binding.charactersRecyclerView.isVisible = !isLoading
+            }
+        }
+
+        lifecycleScope.launch {
+            vm.error.collectLatest { error ->
+                error?.let {
+                    Toast.makeText(this@CartoonActivity, it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
