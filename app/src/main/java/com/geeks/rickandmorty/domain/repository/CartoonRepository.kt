@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CartoonRepository {
     fun getCharacters(): Flow<Either<String , List<Character>>>
+    fun getCharacterById(id: Int): Flow<Either<String, Character>>
 }

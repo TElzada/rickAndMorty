@@ -1,5 +1,4 @@
 package com.geeks.rickandmorty.domain.models
-
 data class Character(
     val created: String,
     val episode: List<String>,

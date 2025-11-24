@@ -1,5 +1,6 @@
 package com.geeks.rickandmorty.presentation.cartoon
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geeks.rickandmorty.databinding.ActivityCartoonBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 class CartoonActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityCartoonBinding
     private lateinit var vm: CartoonViewModel
-    private val adapter = CharactersAdapter()
+    private lateinit var adapter: CharactersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,24 +31,28 @@ class CartoonActivity : AppCompatActivity() {
             insets
         }
 
+        adapter = CharactersAdapter { character ->
+            val intent = Intent(this, CharacterDetailActivity::class.java)
+            intent.putExtra(CharacterDetailActivity.EXTRA_CHARACTER_ID, character.id)
+            startActivity(intent)
+        }
+
         binding.charactersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.charactersRecyclerView.adapter = adapter
 
         val factory = CartoonViewModelFactory()
-        vm = ViewModelProvider(this, factory).get(CartoonViewModel::class.java)
+        vm = ViewModelProvider(this, factory)[CartoonViewModel::class.java]
 
         lifecycleScope.launch {
             vm.charactersState.collectLatest { list ->
                 adapter.setItems(list)
             }
         }
-
         lifecycleScope.launch {
             vm.isLoading.collectLatest { isLoading ->
                 binding.charactersRecyclerView.isVisible = !isLoading
             }
         }
-
         lifecycleScope.launch {
             vm.error.collectLatest { error ->
                 error?.let {
@@ -57,7 +60,6 @@ class CartoonActivity : AppCompatActivity() {
                 }
             }
         }
-
         vm.loadCharacters()
     }
 }

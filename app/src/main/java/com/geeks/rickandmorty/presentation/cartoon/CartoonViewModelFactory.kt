@@ -6,7 +6,6 @@ import com.geeks.rickandmorty.data.api.CartoonApi
 import com.geeks.rickandmorty.data.api.NetworkModule
 import com.geeks.rickandmorty.data.repository.CartoonRepositoryImpl
 import com.geeks.rickandmorty.domain.usecases.GetCharacterUseCase
-
 class CartoonViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

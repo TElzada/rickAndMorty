@@ -1,8 +1,6 @@
 package com.geeks.rickandmorty.data.models
 
-
 import com.google.gson.annotations.SerializedName
-
 data class OriginDto(
     @SerializedName("name")
     val name: String? = null,

@@ -1,8 +1,6 @@
 package com.geeks.rickandmorty.data.models
 
-
 import com.google.gson.annotations.SerializedName
-
 data class InfoDto(
     @SerializedName("count")
     val count: Int? = null,
